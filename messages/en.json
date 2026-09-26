@@ -1,0 +1,72 @@
+{
+  "HomePage": {
+    "title": "Hello world!"
+  },
+
+  "Map": {
+    "General": {
+        "UnknownVessel": "Unknown vessel",
+        "MMSI": "MMSI",
+        "IMO": "IMO",
+        "NavigationStatus": "Navigation status",
+        "CallSign": "Call sign",
+        "VesselType": "Vessel type",
+        "Length": "Length",
+        "Width": "Width",
+        "Destination": "Destination",
+        "ETA": "ETA",
+        "Speed": "Speed",
+        "Course": "Course",
+        "LastUpdate": "Last update",
+        "AISSource": "AIS source",
+        "AISDataLicense": "AIS data license",
+        "Timestamp": "Timestamp"
+    }
+  },
+  "AIS": {
+    "Source": {
+        "AisStream": "aisstream.io",
+        "Pelyr": "Pelyr",
+        "DigitrafficFinnland": "Digitraffic Finland",
+        "BarentsWatch": "BarentsWatch Live AIS"
+    },
+    "NavigationStatus": {
+        "UnderWay": "Under way",
+        "Anchored": "Anchored",
+        "NotUnderCommand": "Not under command",
+        "Restricted": "Restricted",
+        "ConstrainedByDraught": "Constrained by draught",
+        "Moored": "Moored",
+        "Aground": "Aground",
+        "EngagedInFishing": "Engaged in fishing",
+        "UnderWaySailing": "Under way sailing",
+        "AisSartActive": "AIS SART active"
+    }
+  },
+  "AISPages": {
+    "LicensePage": {
+        "PageTitle": "AIS data license",
+        "PageDescription": "The AIS data displayed on this website is provided by various sources. The licenses for the individual sources are listed below. Please note that the data may be subject to additional terms and conditions imposed by the respective data providers.",
+        "Contents": "Contents",
+        "License": "License",
+        "Source": "Source",
+        "SourceLink": "Link",
+        "Description": "Description",
+        "AisStream": {
+            "License": "Unknown license",
+            "Source": "aisstream.io",
+            "Description": "The license for the AIS data provided by aisstream.io is currently unknown. Please refer to the source for more information."
+        },
+        "Pelyr": {
+            "License": "LicenseRef-Pelyr-1.1",
+            "Source": "pelyr.com",
+            "Description": "AIS data from Pelyr (pelyr.com), Pelyr Data Licence 1.1"
+        },
+        "FintrafficDigitraffic": {
+            "License": "CC BY 4.0",
+            "Source": "digitraffic.fi",
+            "Description": "AIS data from Fintraffic Digitraffic (digitraffic.fi), licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)."
+        }
+    }
+  }
+}

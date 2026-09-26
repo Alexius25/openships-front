@@ -1,0 +1,197 @@
+"use client";
+
+import { mapStyles } from "@/lib/map-styles";
+import { useCallback, useEffect, useRef, useState } from "react";
+import CoreMap, { CoreMapRef } from "@/components/map/core-map";
+import { useTheme } from "next-themes";
+import MainMapControls from "@/components/map/main-map-controls";
+import { useMapBounds } from "@/hooks/map/use-map-bounds";
+import type { MapMode } from "@/types/map-mode";
+import { useNormalMapLayers } from "@/hooks/map/use-normal-map-layers";
+import { useTrackMapLayers } from "@/hooks/map/use-track-map-layers";
+import { PickingInfo } from "deck.gl";
+import { useLocale } from "next-intl";
+import HoverVesselTooltip from "./tooltips/hover-vessel-tooltip";
+import HoverPortTooltip from "./tooltips/hover-port-tooltip";
+import SelectedVesselTooltip from "./tooltips/selected-vessel-tooltip";
+import { AttributionControl } from "react-map-gl/maplibre";
+
+interface MainMapProps {
+    mode: MapMode;
+}
+
+type TooltipState = {
+    x: number;
+    y: number;
+} | null;
+
+export default function MainMap({ mode }: MainMapProps) {
+    const locale = useLocale();
+
+    const [mounted, setMounted] = useState(false);
+
+    const [cursor, setCursor] = useState<"grab" | "crosshair" | "pointer">(
+        "grab"
+    );
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const mapRef = useRef<CoreMapRef | null>(null);
+    const [isMapLoaded, setIsMapLoaded] = useState(false);
+
+    const [mapStyle, setMapStyle] = useState(
+        mapStyles.find((s) => s.id === "carto_free_voyager")?.styleUrl ??
+            mapStyles[0].styleUrl
+    );
+    const activeStyleId = mapStyles.find((s) => s.styleUrl === mapStyle)?.id;
+
+    const [tooltipPosition, setTooltipPosition] = useState<TooltipState>(null);
+    const [draggablePosition, setDraggablePosition] = useState({
+        x: 100,
+        y: 100,
+    });
+
+    const vesselMapTheme = mapStyles.find((s) => s.styleUrl === mapStyle)?.dark
+        ? "dark"
+        : "light";
+
+    const handleStyleChange = (styleUrl: string) => {
+        const style = mapStyles.find((s) => s.styleUrl === styleUrl);
+        if (!style) return;
+        setMapStyle(styleUrl);
+    };
+
+    const handleLoad = () => {
+        setIsMapLoaded(true);
+    };
+
+    const { resolvedTheme } = useTheme();
+    const unit = "metric";
+
+    const { bounds, zoom } = useMapBounds(mapRef, isMapLoaded);
+
+    const normalLayers = useNormalMapLayers({
+        bounds,
+        zoom,
+        theme: vesselMapTheme,
+        isMapLoaded,
+    });
+
+    const trackLayers = useTrackMapLayers({
+        bounds,
+        trackMmsi: mode.type === "track" ? mode.mmsi : null,
+        from: mode.type === "track" ? mode.from : null,
+        to: mode.type === "track" ? mode.to : null,
+        zoom,
+        theme: vesselMapTheme,
+        isMapLoaded,
+    });
+
+    const activeLayers =
+        mode.type === "normal"
+            ? normalLayers
+            : mode.type === "track"
+              ? trackLayers
+              : null;
+
+    const layers = activeLayers?.layers;
+
+    const handleHover = useCallback(
+    (info: PickingInfo) => {
+        const isVessel = info.layer?.id === "vessels" && info.object;
+        const isPort = info.layer?.id === "ports" && info.object;
+
+        if (isVessel || isPort) {
+            setTooltipPosition({
+                x: info.x,
+                y: info.y,
+            });
+        } else {
+            setTooltipPosition(null);
+        }
+
+        activeLayers?.onHover(info);
+    },
+    [activeLayers?.onHover]
+);
+
+    return (
+        <div className="h-full min-h-0 w-full">
+            <CoreMap
+                ref={mapRef}
+                style={mapStyle}
+                layers={layers}
+                initialViewState={{
+                    longitude: 11.2,
+                    latitude: 54.4333,
+                    zoom: 10,
+                    bearing: 0,
+                    pitch: 0,
+                    padding: { top: 0, bottom: 0, left: 0, right: 0 },
+                }}
+                onLoad={handleLoad}
+                cursor={cursor}
+                deckProps={{
+                    getCursor: ({ isHovering }) => {
+                        if (isHovering) {
+                            setCursor("pointer");
+                            return "pointer";
+                        } else {
+                            setCursor("grab");
+                            return "grab";
+                        }
+                    },
+                    pickingRadius: 10,
+                    onHover: handleHover,
+                    onClick:
+                        mode.type === "normal"
+                            ? normalLayers.onClick
+                            : mode.type === "track"
+                              ? trackLayers.onClick
+                              : undefined,
+                }}
+            >
+                <AttributionControl
+                    compact
+                    customAttribution={[
+                        "© <a href='https://openships.de' target='_blank' rel='noopener noreferrer'>OpenShips</a>",
+                        `© <a href='/${locale}/ais/licenses' target='_blank' rel='noopener noreferrer'>AIS Data Sources</a>`,
+                    ]}
+                />
+
+                {activeLayers?.hoveredVessel && tooltipPosition && (
+                    <HoverVesselTooltip
+                        normal={activeLayers}
+                        tooltipPosition={tooltipPosition}
+                    />
+                )}
+
+                {activeLayers?.hoveredPort && tooltipPosition && (
+                    <HoverPortTooltip
+                        normal={activeLayers}
+                        tooltipPosition={tooltipPosition}
+                    />
+                )}
+
+                <MainMapControls
+                    mapStyle={mapStyle}
+                    activeStyleId={activeStyleId}
+                    onStyleChange={handleStyleChange}
+                    unit={unit}
+                    mounted={mounted}
+                    resolvedTheme={resolvedTheme}
+                />
+            </CoreMap>
+
+            {mounted && activeLayers?.selectedVessel && (
+                <SelectedVesselTooltip
+                    normal={activeLayers}
+                    draggablePosition={draggablePosition}
+                    setDraggablePosition={setDraggablePosition}
+                />
+            )}
+        </div>
+    );
+}
