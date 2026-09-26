@@ -1,9 +1,5 @@
-import { loadEnvConfig } from '@next/env'
- 
-const projectDir = process.cwd()
-loadEnvConfig(projectDir)
-
-export const API_URL = process.env.API_URL || "http://192.168.0.137:5018";
+export const API_URL =
+    process.env.NEXT_PUBLIC_API_URL || "http://192.168.0.137:5018";
 
 export const sharpTextFontSettings = {
     sdf: true,
@@ -14,4 +10,5 @@ export const sharpTextFontSettings = {
     smoothing: 0.4,
 };
 
-export const VESSELS_MAX_AGE_MINUTES = Number(process.env.VESSELS_MAX_AGE_MINUTES) || 60;
+export const VESSELS_MAX_AGE_MINUTES =
+    Number(process.env.NEXT_PUBLIC_VESSELS_MAX_AGE_MINUTES) || 60;

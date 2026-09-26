@@ -9,9 +9,9 @@ import type { ReactNode, ComponentProps, RefObject } from "react";
 import { mapStyles } from "@/lib/map-styles";
 import { DeckGLOverlay } from "@/lib/deckgl-utils";
 import { setWorkerUrl } from "maplibre-gl";
-//import "maplibre-theme/icons.default.css";
-//import "maplibre-theme/modern.css";
-import "maplibre-gl/dist/maplibre-gl.css";
+import "maplibre-theme/icons.default.css";
+import "maplibre-theme/modern.css";
+//import "maplibre-gl/dist/maplibre-gl.css";
 
 setWorkerUrl("/maplibre/maplibre-gl-worker.mjs");
 
