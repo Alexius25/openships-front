@@ -1,8 +1,5 @@
 import MapMode from "@/types/map-mode";
-import NormalMap from "@/hooks/map/use-normal-map-layers";
 import { MapBounds } from "@/hooks/map/use-map-bounds";
-// import TrackMap from "@/components/map/modes/track-map-mode";
-// import HistoryMap from "@/components/map/modes/history-map-mode";
 
 export interface MapModeRendererProps {
     mode: MapMode;
@@ -13,41 +10,11 @@ export interface MapModeRendererProps {
 }
 
 export function MapModeRenderer({
-    mode,
-    bounds,
-    zoom,
-    theme,
-    isMapLoaded,
+    mode: _mode,
+    bounds: _bounds,
+    zoom: _zoom,
+    theme: _theme,
+    isMapLoaded: _isMapLoaded,
 }: MapModeRendererProps) {
-    switch (mode.type) {
-        case "normal":
-            return (
-                <NormalMap
-                    bounds={bounds}
-                    zoom={zoom}
-                    theme={theme}
-                    isMapLoaded={isMapLoaded}
-                />
-            );
-
-        /*
-        case "track":
-            return (
-                <TrackMap
-                    {...props}
-                    mmsi={props.mode.mmsi}
-                />
-            );
-
-        case "history":
-            return (
-                <HistoryMap
-                    {...props}
-                    mmsi={props.mode.mmsi}
-                    from={props.mode.from}
-                    to={props.mode.to}
-                />
-            );
-            */
-    }
+    return null;
 }
