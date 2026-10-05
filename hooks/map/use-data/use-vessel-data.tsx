@@ -1,8 +1,9 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { API_URL, VESSELS_MAX_AGE_MINUTES } from "@/lib/config";
+import { API_URL, VESSELS_MAX_AGE_MINUTES } from "@/config/runtime";
 import { ApiResponse } from "@/models/api-response";
 import type { VesselPositionResponse } from "@/models/vessel-position-response";
 import { VesselTrackResponse } from "@/models/vessel-track-response";
+import type { VesselDetailResponse } from "@/models/vessel-detail-response";
 
 export function useVesselData(
     enabled: boolean,
@@ -77,6 +78,28 @@ export function useVesselTrackData(
         enabled,
         staleTime: 1000 * 30,
         refetchInterval: 1000 * 30,
+        refetchOnWindowFocus: true,
+        placeholderData: keepPreviousData,
+    });
+}
+
+export function useVesselDetailsData(enabled: boolean, mmsi: number) {
+    return useQuery<ApiResponse<VesselDetailResponse>>({
+        queryKey: ["vesselDetailsData", mmsi],
+        queryFn: async () => {
+            const res = await fetch(
+                `${API_URL}/api/v1/vessels/details/${mmsi}`
+            );
+
+            if (!res.ok) {
+                throw new Error("Failed to fetch vessel details data");
+            }
+
+            return (await res.json()) as ApiResponse<VesselDetailResponse>;
+        },
+        enabled,
+        staleTime: 1000 * 120,
+        refetchInterval: 1000 * 120,
         refetchOnWindowFocus: true,
         placeholderData: keepPreviousData,
     });

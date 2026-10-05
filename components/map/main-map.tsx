@@ -15,6 +15,7 @@ import HoverVesselTooltip from "./tooltips/hover-vessel-tooltip";
 import HoverPortTooltip from "./tooltips/hover-port-tooltip";
 import SelectedVesselTooltip from "./tooltips/selected-vessel-tooltip";
 import { AttributionControl } from "react-map-gl/maplibre";
+import { usePrimaryInput } from "@/hooks/useIsTouchDevice";
 
 interface MainMapProps {
     mode: MapMode;
@@ -33,6 +34,8 @@ export default function MainMap({ mode }: MainMapProps) {
     const [cursor, setCursor] = useState<"grab" | "crosshair" | "pointer">(
         "grab"
     );
+
+    const { isTouch } = usePrimaryInput();
 
     useEffect(() => {
         setMounted(true);
@@ -165,6 +168,7 @@ export default function MainMap({ mode }: MainMapProps) {
                     <HoverVesselTooltip
                         normal={activeLayers}
                         tooltipPosition={tooltipPosition}
+                        isTouch={isTouch}
                     />
                 )}
 
@@ -172,6 +176,7 @@ export default function MainMap({ mode }: MainMapProps) {
                     <HoverPortTooltip
                         normal={activeLayers}
                         tooltipPosition={tooltipPosition}
+                        isTouch={isTouch}
                     />
                 )}
 
@@ -190,6 +195,7 @@ export default function MainMap({ mode }: MainMapProps) {
                     normal={activeLayers}
                     draggablePosition={draggablePosition}
                     setDraggablePosition={setDraggablePosition}
+                    isTouch={isTouch}
                 />
             )}
         </div>

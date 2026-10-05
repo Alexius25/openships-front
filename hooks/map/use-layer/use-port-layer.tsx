@@ -6,7 +6,7 @@ import { ApiResponse } from "@/models/api-response";
 import { PortResponse } from "@/models/port-response";
 import { generatePortIcon } from "@/lib/icons/port-icon";
 import { PickingInfo } from "@deck.gl/core";
-import { sharpTextFontSettings } from "@/lib/config";
+import { sharpTextFontSettings } from "@/config/text-settings";
 
 export function usePortLayers(
     data: ApiResponse<PortResponse[]> | null,

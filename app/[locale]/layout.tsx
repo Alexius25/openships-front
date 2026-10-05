@@ -5,6 +5,10 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import QueryClientProvider from "@/components/query-provider";
 import { NextIntlClientProvider } from "next-intl";
+import "flag-icons/css/flag-icons.min.css";
+import Script from "next/script";
+
+import { Navbar } from "@/components/navbar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -30,9 +34,13 @@ export default function RootLayout({
             )}
         >
             <body>
+                <Script src="/runtime-config.js" strategy="beforeInteractive" />
                 <NextIntlClientProvider>
                     <ThemeProvider>
-                        <QueryClientProvider>{children}</QueryClientProvider>
+                        <QueryClientProvider>
+                            <Navbar />
+                            {children}
+                        </QueryClientProvider>
                     </ThemeProvider>
                 </NextIntlClientProvider>
             </body>

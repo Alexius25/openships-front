@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     experimental: {
         rootParams: true,
     },
+    output: "standalone",
 };
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");

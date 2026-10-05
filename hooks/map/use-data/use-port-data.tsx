@@ -1,5 +1,5 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { API_URL } from "@/lib/config";
+import { API_URL } from "@/config/runtime";
 import { ApiResponse } from "@/models/api-response";
 import { PortResponse } from "@/models/port-response";
 

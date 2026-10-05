@@ -12,7 +12,7 @@ import { ApiResponse } from "@/models/api-response";
 import type { VesselPositionResponse } from "@/models/vessel-position-response";
 import { NavigationStatus } from "@/models/navigation-status";
 import { PickingInfo } from "@deck.gl/core";
-import { sharpTextFontSettings } from "@/lib/config";
+import { sharpTextFontSettings } from "@/config/text-settings";
 import { VesselTrackResponse } from "@/models/vessel-track-response";
 
 const vesselIconCache = new Map<string, string>();

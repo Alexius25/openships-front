@@ -1,0 +1,97 @@
+{
+  "HomePage": {
+    "title": "Hello world!"
+  },
+  "Map": {
+    "General": {
+        "UnknownVessel": "Unbekanntes Schiff",
+        "Unknown": "Unbekannt",
+        "MMSI": "MMSI",
+        "IMO": "IMO",
+        "NavigationStatus": "Navigationsstatus",
+        "CallSign": "Rufzeichen",
+        "VesselType": "Schiffstyp",
+        "Length": "Länge",
+        "Width": "Breite",
+        "Destination": "Ziel",
+        "ETA": "ETA",
+        "Speed": "Geschwindigkeit",
+        "Course": "Kurs",
+        "Draught": "Tiefgang",
+        "LastUpdate": "Letzte Aktualisierung",
+        "AISSource": "AIS-Quelle",
+        "AISDataLicense": "AIS-Datenlizenz",
+        "Timestamp": "Zeitstempel",
+        "NoVesselPhoto": "Kein Schiffsfoto verfügbar"
+    },
+    "Port": {
+      "Name": "Name",
+      "Country": "Land",
+      "Location": "Standort",
+      "Subregion": "Unterregion",
+      "Coordinates": "Koordinaten",
+      "TimeZone": "Zeitzone"
+    }
+  },
+  "AIS": {
+    "Source": {
+        "AisStream": "aisstream.io",
+        "Pelyr": "Pelyr",
+        "DigitrafficFinnland": "Digitraffic Finland",
+        "BarentsWatch": "BarentsWatch Live AIS"
+    },
+    "NavigationStatus": {
+        "UnderWay": "Unterwegs",
+        "Anchored": "Geankert",
+        "NotUnderCommand": "Nicht unter Befehl",
+        "Restricted": "Eingeschränkte Manövrierfähigkeit",
+        "ConstrainedByDraught": "Eingeschränkt durch Tiefgang",
+        "Moored": "Gebockt",
+        "Aground": "Auf Grund gelaufen",
+        "EngagedInFishing": "Fischend",
+        "UnderWaySailing": "Unterwegs segelnd",
+        "AisSartActive": "AIS SART aktiv"
+    },
+    "Destination": {
+      "single": "{to}",
+      "directed": "{from} → {to}",
+      "directedWithoutFrom": "{to}",
+      "roundTrip": "{from} → {to} → {from}"
+    }
+  },
+  "AISPages": {
+    "LicensePage": {
+        "PageTitle": "AIS-Datenquellen und Lizenzen",
+        "PageDescription": "Die AIS-Daten, die auf dieser Website angezeigt werden, stammen von verschiedenen Quellen. Die Lizenzen für die einzelnen Quellen sind unten aufgeführt. Bitte beachten Sie, dass die Daten möglicherweise zusätzlichen Nutzungsbedingungen unterliegen, die von den jeweiligen Datenanbietern festgelegt wurden.",
+        "Contents": "Inhalt",
+        "License": "Lizenz",
+        "Source": "Quelle",
+        "SourceLink": "Link",
+        "Description": "Beschreibung",
+        "AisStream": {
+            "License": "Unbekannte Lizenz",
+            "Source": "aisstream.io",
+            "Description": "Die Lizenz für die AIS-Daten von aisstream.io ist derzeit unbekannt. Bitte konsultieren Sie die Quelle für weitere Informationen."
+        },
+        "Pelyr": {
+            "License": "LicenseRef-Pelyr-1.1",
+            "Source": "pelyr.com",
+            "Description": "AIS data from Pelyr (pelyr.com), Pelyr Data Licence 1.1"
+        },
+        "FintrafficDigitraffic": {
+            "License": "CC BY 4.0",
+            "Source": "digitraffic.fi",
+            "Description": "AIS data from Fintraffic Digitraffic (digitraffic.fi), licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)."
+        }
+    }
+  },
+  "Metadata": {
+    "title": "OpenShips - Live AIS Schiffverfolgung",
+    "description": "OpenShips ist eine kostenlose und quelloffene Plattform für die Live-Verfolgung von AIS-Schiffen. Verfolgen Sie Schiffe in Echtzeit, sehen Sie Schiffsdetails an und erkunden Sie den maritimen Verkehr weltweit."
+  },
+  "Navbar": {
+    "Map": "Karte",
+    "Vessels": "Schiffe",
+    "Ports": "Häfen"
+  }
+}

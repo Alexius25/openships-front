@@ -10,7 +10,7 @@
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
-    "predev": "node ./scripts/copy-maplibre-worker.mjs",
+    "predev": "node ./scripts/copy-maplibre-worker.mjs && node scripts/generate-runtime-config.mjs",
     "prebuild": "node ./scripts/copy-maplibre-worker.mjs"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "class-variance-authority": "^0.7.1",
     "cn": "^0.2.6",
     "deck.gl": "^9.4.0",
+    "flag-icons": "^7.5.0",
     "lodash": "^4.18.1",
     "lucide-react": "^1.45.0",
     "map-gl-style-switcher": "^0.10.1",
