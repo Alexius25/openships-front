@@ -22,7 +22,8 @@
         "AISSource": "AIS source",
         "AISDataLicense": "AIS data license",
         "Timestamp": "Timestamp",
-        "NoVesselPhoto": "No vessel photo available"
+        "NoVesselPhoto": "No vessel photo available",
+        "ViewTrack": "View Track"
     },
     "Port": {
       "Name": "Name",
@@ -90,6 +91,7 @@
     "description": "OpenShips is a free and open-source platform for live AIS vessel tracking. Track ships in real-time, view vessel details, and explore maritime traffic worldwide."
   },
   "Navbar": {
+    "Navigation": "Navigation",
     "Map": "Map",
     "Vessels": "Vessels",
     "Ports": "Ports"

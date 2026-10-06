@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { writeFileSync } from "node:fs";
 
 const apiUrl = process.env.API_URL || "http://localhost:5018";
@@ -13,3 +14,5 @@ const config = `window.__OPENSHIPS_CONFIG__ = {
 writeFileSync("public/runtime-config.js", config);
 
 console.log("Generated runtime-config.js");
+console.log("API_URL:", apiUrl);
+console.log("VESSELS_MAX_AGE_MINUTES:", vesselsMaxAgeMinutes);

@@ -4,6 +4,7 @@ import { NavigationStatus } from "@/models/navigation-status";
 import { AisSource } from "@/models/ais-source";
 import { AisDataLicense } from "@/models/ais-data-license";
 import { useFormatDate } from "@/hooks/useFormatDate";
+import { Link } from "@/i18n/navigation";
 
 export default function VesselDetails({
     normal,
@@ -191,6 +192,17 @@ export default function VesselDetails({
                 <span className="truncate font-medium">
                     {AisDataLicense[normal.selectedVessel.license ?? 0]}
                 </span>
+            </div>
+
+            <hr className="mx-2 my-1" />
+
+            <div className="flex">
+                <Link
+                    href={`/track/${normal.selectedVessel.mmsi}`}
+                    className="mx-auto p-4 m-2 bg-primary rounded-lg min-w-40 text-center text-white"
+                >
+                    {tMap("General.ViewTrack")}
+                </Link>
             </div>
         </div>
     );

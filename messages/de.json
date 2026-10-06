@@ -22,7 +22,8 @@
         "AISSource": "AIS-Quelle",
         "AISDataLicense": "AIS-Datenlizenz",
         "Timestamp": "Zeitstempel",
-        "NoVesselPhoto": "Kein Schiffsfoto verfügbar"
+        "NoVesselPhoto": "Kein Schiffsfoto verfügbar",
+        "ViewTrack": "Historie anzeigen"
     },
     "Port": {
       "Name": "Name",
@@ -90,6 +91,7 @@
     "description": "OpenShips ist eine kostenlose und quelloffene Plattform für die Live-Verfolgung von AIS-Schiffen. Verfolgen Sie Schiffe in Echtzeit, sehen Sie Schiffsdetails an und erkunden Sie den maritimen Verkehr weltweit."
   },
   "Navbar": {
+    "Navigation": "Navigation",
     "Map": "Karte",
     "Vessels": "Schiffe",
     "Ports": "Häfen"

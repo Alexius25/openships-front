@@ -8,7 +8,7 @@ import { NextIntlClientProvider } from "next-intl";
 import "flag-icons/css/flag-icons.min.css";
 import Script from "next/script";
 
-import { Navbar } from "@/components/navbar";
+import { Navbar } from "@/components/navbar/navbar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 

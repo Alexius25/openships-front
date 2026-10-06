@@ -1,4 +1,4 @@
 window.__OPENSHIPS_CONFIG__ = {
-    apiUrl: "http://localhost:5018",
+    apiUrl: "https://api.openships.de",
     vesselsMaxAgeMinutes: 60
 };
