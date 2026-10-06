@@ -12,7 +12,7 @@ export default function Page() {
     const factor = 60 * 60 * 1000; // 1 hour in milliseconds
 
     const [from] = useState(
-        () => new Date(Date.now() - factor * 24 * 7) // 24 hours ago
+        () => new Date(Date.now() - factor * 24 * 7) // 7 days ago
     );
 
     const [now] = useState(() => new Date());

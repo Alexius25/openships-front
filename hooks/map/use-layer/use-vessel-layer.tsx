@@ -66,6 +66,9 @@ export function useVesselLayers(
         null
     );
 
+    const [selectedVesselSnapshot, setSelectedVesselSnapshot] =
+        useState<VesselPositionResponse | null>(null);
+
     const onHover = useCallback((info: PickingInfo) => {
         if (info.layer?.id !== "vessels" || !info.object) {
             setHoveredVesselMmsi(null);
@@ -80,23 +83,28 @@ export function useVesselLayers(
     const onClick = useCallback((info: PickingInfo) => {
         if (info.layer?.id === "vessels" && info.object) {
             const vessel = info.object as VesselPositionResponse;
+
             setSelectedVesselMmsi(vessel.mmsi);
+            setSelectedVesselSnapshot(vessel);
+
             return;
         }
 
         setSelectedVesselMmsi(null);
+        setSelectedVesselSnapshot(null);
     }, []);
 
     const selectedVessel = useMemo(() => {
-        if (!selectedVesselMmsi || !data?.data) {
+        if (!selectedVesselMmsi) {
             return null;
         }
 
-        return (
-            data.data.find((vessel) => vessel.mmsi === selectedVesselMmsi) ??
-            null
+        const currentVessel = data?.data?.find(
+            (vessel) => vessel.mmsi === selectedVesselMmsi
         );
-    }, [data, selectedVesselMmsi]);
+
+        return currentVessel ?? selectedVesselSnapshot;
+    }, [data, selectedVesselMmsi, selectedVesselSnapshot]);
 
     const hoveredVessel = useMemo(() => {
         if (!hoveredVesselMmsi || !data?.data) {
@@ -246,10 +254,7 @@ export function useTrackVesselLayers(
         const segments = positions.slice(0, -1).map((position, index) => ({
             path: [
                 [position.longitude, position.latitude],
-                [
-                    positions[index + 1].longitude,
-                    positions[index + 1].latitude,
-                ],
+                [positions[index + 1].longitude, positions[index + 1].latitude],
             ],
             sog: position.sog ?? 0,
         }));

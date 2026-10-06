@@ -79,7 +79,7 @@ export function useTrackMapLayers({
     );
 
     return {
-        layers: [...port.layers, ...vessel.layers, ...trackVessel.layers],
+        layers: [...trackVessel.layers, ...port.layers, ...vessel.layers],
         onHover: onHover,
         onClick: vessel.onClick,
         hoveredVessel: vessel.hoveredVessel,

@@ -16,6 +16,8 @@ import HoverPortTooltip from "./tooltips/hover-port-tooltip";
 import SelectedVesselTooltip from "./tooltips/selected-vessel-tooltip";
 import { AttributionControl } from "react-map-gl/maplibre";
 import { usePrimaryInput } from "@/hooks/useIsTouchDevice";
+import { useSettings } from "@/lib/settings";
+import type { ViewStateChangeEvent } from "react-map-gl/maplibre";
 
 interface MainMapProps {
     mode: MapMode;
@@ -44,10 +46,7 @@ export default function MainMap({ mode }: MainMapProps) {
     const mapRef = useRef<CoreMapRef | null>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
 
-    const [mapStyle, setMapStyle] = useState(
-        mapStyles.find((s) => s.id === "carto_free_voyager")?.styleUrl ??
-            mapStyles[0].styleUrl
-    );
+    const [mapStyle, setMapStyle] = useState(useSettings.getState().mapStyle);
     const activeStyleId = mapStyles.find((s) => s.styleUrl === mapStyle)?.id;
 
     const [tooltipPosition, setTooltipPosition] = useState<TooltipState>(null);
@@ -55,6 +54,10 @@ export default function MainMap({ mode }: MainMapProps) {
         x: 100,
         y: 100,
     });
+
+    const handleMoveEnd = useCallback((event: ViewStateChangeEvent) => {
+        useSettings.getState().setViewState(event.viewState);
+    }, []);
 
     const vesselMapTheme = mapStyles.find((s) => s.styleUrl === mapStyle)?.dark
         ? "dark"
@@ -64,6 +67,7 @@ export default function MainMap({ mode }: MainMapProps) {
         const style = mapStyles.find((s) => s.styleUrl === styleUrl);
         if (!style) return;
         setMapStyle(styleUrl);
+        useSettings.getState().setMapStyle(styleUrl);
     };
 
     const handleLoad = () => {
@@ -71,7 +75,7 @@ export default function MainMap({ mode }: MainMapProps) {
     };
 
     const { resolvedTheme } = useTheme();
-    const unit = "metric";
+    const unit = useSettings((state) => state.unit);
 
     const { bounds, zoom } = useMapBounds(mapRef, isMapLoaded);
 
@@ -102,23 +106,23 @@ export default function MainMap({ mode }: MainMapProps) {
     const layers = activeLayers?.layers;
 
     const handleHover = useCallback(
-    (info: PickingInfo) => {
-        const isVessel = info.layer?.id === "vessels" && info.object;
-        const isPort = info.layer?.id === "ports" && info.object;
+        (info: PickingInfo) => {
+            const isVessel = info.layer?.id === "vessels" && info.object;
+            const isPort = info.layer?.id === "ports" && info.object;
 
-        if (isVessel || isPort) {
-            setTooltipPosition({
-                x: info.x,
-                y: info.y,
-            });
-        } else {
-            setTooltipPosition(null);
-        }
+            if (isVessel || isPort) {
+                setTooltipPosition({
+                    x: info.x,
+                    y: info.y,
+                });
+            } else {
+                setTooltipPosition(null);
+            }
 
-        activeLayers?.onHover(info);
-    },
-    [activeLayers?.onHover]
-);
+            activeLayers?.onHover(info);
+        },
+        [activeLayers?.onHover]
+    );
 
     return (
         <div className="h-full min-h-0 w-full">
@@ -126,16 +130,10 @@ export default function MainMap({ mode }: MainMapProps) {
                 ref={mapRef}
                 style={mapStyle}
                 layers={layers}
-                initialViewState={{
-                    longitude: 11.2,
-                    latitude: 54.4333,
-                    zoom: 10,
-                    bearing: 0,
-                    pitch: 0,
-                    padding: { top: 0, bottom: 0, left: 0, right: 0 },
-                }}
+                initialViewState={useSettings.getState().viewState}
                 onLoad={handleLoad}
                 cursor={cursor}
+                onMoveEnd={handleMoveEnd}
                 deckProps={{
                     getCursor: ({ isHovering }) => {
                         if (isHovering) {
